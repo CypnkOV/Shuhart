@@ -10,25 +10,39 @@ pepe2 = pd.DataFrame({'x': razmah}) # таблица размахов
 
 X = np.nanmean(pepe1.x) # средняя для Индивид. (nanmean её вычисляет)
 R = np.nanmean(pepe2.x) # средняя для Размахов
-
 UCL1 = X + 2.660 * R
 LCL1 = X - 2.660 * R
 UCL2 = 3.267 * R
+u1 = 1 / 3 * (UCL1 - X)
+u11 = 2 / 3 * (UCL1 - X)
+U1 = UCL1 - u11
+U11 = UCL1 - u1
+l1 = 1 / 3 * (X - LCL1)
+l11 = 2 / 3 * (X - LCL1)
+L1 = X - l11
+L11 = X - l1
 
 print('индивидуальные значения ->', mesh1)
 
 # скрыть ограничения графика
 
-fig, ax = plt.subplots()
+ax = plt.gca()
 
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.spines['bottom'].set_position('center')
+plt.xticks([])
 
 # средняя линия, границы
 
-plt.axhline(y = X, color = 'red', linestyle = '--', label = 'среднее', linewidth = '1') # axhline добавляет гориз линию
+plt.axhline(y = X, color = 'red', linestyle = '-.', label = 'среднее', linewidth = '1') # axhline добавляет гориз линию
 plt.axhline(y = UCL1, color = 'red', linestyle = '--', label = 'верхняя', linewidth = '1')
 plt.axhline(y = LCL1, color = 'red', linestyle = '--', label = 'нижняя', linewidth = '1')
+plt.axhline(y = U1, color = 'red', linestyle = '--', linewidth = '1')
+plt.axhline(y = U11, color = 'red', linestyle = '--', linewidth = '1')
+plt.axhline(y = L1, color = 'red', linestyle = '--', linewidth = '1')
+plt.axhline(y = L11, color = 'red', linestyle = '--', linewidth = '1')
 
 # отображение графика индивид.
 
