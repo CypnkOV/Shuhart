@@ -3,7 +3,7 @@ import numpy as np
 import random as rand
 import pandas as pd
 
-mesh1 = [rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100)]
+mesh1 = [rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100)]
 pepe1 = pd.DataFrame({'x': mesh1})
 razmah = []
 
@@ -19,6 +19,7 @@ def razschet():
 razschet()
 pepe2 = pd.DataFrame({'x': razmah})
 
+n = 0
 m = 0
 a1 = 0
 X = 0
@@ -37,7 +38,7 @@ L11 = 0
 
 # 1 критерий
 
-while len(mesh1) != 10:
+while len(mesh1) != 9:
     X = np.nanmean(pepe1.x)  # средняя для Индивид. (nanmean её вычисляет)
     R = np.nanmean(pepe2.x)  # средняя для Размахов
     UCL1 = X + 2.660 * R
@@ -56,10 +57,12 @@ while len(mesh1) != 10:
         mesh1.insert(2, m)
         razmah.clear()
         razschet()
+        pepe1 = pd.DataFrame({'x': mesh1})
+        pepe2 = pd.DataFrame({'x': razmah})
 
 # 2 критерий
 
-while len(mesh1) != 16:
+while len(mesh1) != 15:
     X = np.nanmean(pepe1.x)
     R = np.nanmean(pepe2.x)
     UCL1 = X + 2.660 * R
@@ -78,8 +81,11 @@ while len(mesh1) != 16:
         mesh1.insert(6, a1)
         razmah.clear()
         razschet()
+        pepe1 = pd.DataFrame({'x': mesh1})
+        pepe2 = pd.DataFrame({'x': razmah})
 
 # дописать третий критерий
+
 
 print('индивидуальные значения ->', mesh1)
 print('размахи ->', razmah)
