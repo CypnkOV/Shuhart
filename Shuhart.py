@@ -5,16 +5,22 @@ import pandas as pd
 
 mesh1 = [rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100)]
 pepe1 = pd.DataFrame({'x': mesh1})
-razmah = [abs(mesh1[0]-mesh1[1]), abs(mesh1[1]-mesh1[2]), abs(mesh1[2]-mesh1[3]), abs(mesh1[3]-mesh1[4]), abs(mesh1[4]-mesh1[5]), abs(mesh1[5]-mesh1[6]), abs(mesh1[6]-mesh1[7]), abs(mesh1[7]-mesh1[8])]
+razmah = []
+
+def razschet():
+    x = 0
+    y = 1
+    while x != len(mesh1) - 1:
+        n = abs(mesh1[x]-mesh1[y])
+        x += 1
+        y += 1
+        razmah.append(n)
+
+razschet()
 pepe2 = pd.DataFrame({'x': razmah})
 
 m = 0
 a1 = 0
-a2 = 0
-a3 = 0
-a4 = 0
-a5 = 0
-a6 = 0
 X = 0
 R = 0
 UCL1 = 0
@@ -28,6 +34,8 @@ l1 = 0
 l11 = 0
 L1 = 0
 L11 = 0
+
+# 1 критерий
 
 while len(mesh1) != 10:
     X = np.nanmean(pepe1.x)  # средняя для Индивид. (nanmean её вычисляет)
@@ -46,7 +54,10 @@ while len(mesh1) != 10:
     m += 1
     if m > UCL1: # Первый критерий
         mesh1.insert(2, m)
-        razmah.append(abs(mesh1[8]-mesh1[9]))
+        razmah.clear()
+        razschet()
+
+# 2 критерий
 
 while len(mesh1) != 16:
     X = np.nanmean(pepe1.x)
@@ -62,18 +73,14 @@ while len(mesh1) != 16:
     l11 = 2 / 3 * (X - LCL1)
     L1 = X - l11
     L11 = X - l1
-    a1 += 1
+    a1 += 2
     if a1 > L1:
         mesh1.insert(6, a1)
-        razmah.append(abs(mesh1[9] - mesh1[10]))
-    if a2 < a1:
-        a2 += 1
-    else:
-        mesh1.insert(7, a2)
-        razmah.append(abs(mesh1[10] - mesh1[11]))
-        #################################################### Дописать сюда
+        razmah.clear()
+        razschet()
 
-print(UCL1)
+# дописать третий критерий
+
 print('индивидуальные значения ->', mesh1)
 print('индивидуальные значения ->', razmah)
 pepe1 = pd.DataFrame({'x': mesh1}) # таблица индивидуальных значений
