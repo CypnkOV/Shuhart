@@ -82,7 +82,7 @@ while len(mesh1) != 16:
 # дописать третий критерий
 
 print('индивидуальные значения ->', mesh1)
-print('индивидуальные значения ->', razmah)
+print('размахи ->', razmah)
 pepe1 = pd.DataFrame({'x': mesh1}) # таблица индивидуальных значений
 pepe2 = pd.DataFrame({'x': razmah}) # таблица размахов
 
