@@ -217,7 +217,7 @@ print('размахи ->', razmah)
 pepe1 = pd.DataFrame({'x': mesh1}) # таблица индивидуальных значений
 pepe2 = pd.DataFrame({'x': razmah}) # таблица размахов
 
-# скрыть ограничения графика
+# скрыть ограничения графика, подпись зон
 
 ax = plt.gca()
 
@@ -225,17 +225,27 @@ ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.spines['bottom'].set_visible(False)
 ax.spines['bottom'].set_position('center')
+ax.set_title("Критерии выявления особых причин")
+y_values = [UCL1, X, LCL1]
+labels = ["UCL", "X", "LCL"]
+ax.text(-1, (X + L11) / 2, 'C', horizontalalignment='left', color='black', fontsize=20)
+ax.text(-1, (X + U1) / 2, 'C', horizontalalignment='left', color='black', fontsize=20)
+ax.text(-1, (U1 + U11) / 2, 'B', horizontalalignment='left', color='black', fontsize=20)
+ax.text(-1, (L1 + L11) / 2, 'B', horizontalalignment='left', color='black', fontsize=20)
+ax.text(-1, (U11 + UCL1) / 2, 'A', horizontalalignment='left', color='black', fontsize=20)
+ax.text(-1, (L1 + LCL1) / 2, 'A', horizontalalignment='left', color='black', fontsize=20)
+plt.yticks(y_values, labels)
 plt.xticks([])
 
 # средняя линия, границы
 
-plt.axhline(y = X, color = 'red', linestyle = '-.', label = 'среднее', linewidth = '1') # axhline добавляет гориз линию
-plt.axhline(y = UCL1, color = 'red', linestyle = '--', label = 'верхняя', linewidth = '1')
-plt.axhline(y = LCL1, color = 'red', linestyle = '--', label = 'нижняя', linewidth = '1')
-plt.axhline(y = U1, color = 'red', linestyle = '--', linewidth = '1')
-plt.axhline(y = U11, color = 'red', linestyle = '--', linewidth = '1') # 2 по счету линия
-plt.axhline(y = L1, color = 'red', linestyle = '--', linewidth = '1')
-plt.axhline(y = L11, color = 'red', linestyle = '--', linewidth = '1') # 5 по счету линия
+plt.axhline(y = X, color = 'black', linestyle = '-.', label = 'среднее', linewidth = '1') # axhline добавляет гориз линию
+plt.axhline(y = UCL1, color = 'black', linestyle = '--', label = 'верхняя', linewidth = '1')
+plt.axhline(y = LCL1, color = 'black', linestyle = '--', label = 'нижняя', linewidth = '1')
+plt.axhline(y = U1, color = 'black', linestyle = '--', linewidth = '1')
+plt.axhline(y = U11, color = 'black', linestyle = '--', linewidth = '1') # 2 по счету линия
+plt.axhline(y = L1, color = 'black', linestyle = '--', linewidth = '1')
+plt.axhline(y = L11, color = 'black', linestyle = '--', linewidth = '1') # 5 по счету линия
 
 # отображение графика индивид.
 
