@@ -570,7 +570,7 @@ plt.axhline(y = U1, color = 'black', linestyle = '--', linewidth = '1')
 plt.axhline(y = U11, color = 'black', linestyle = '--', linewidth = '1') # 2 по счету линия
 plt.axhline(y = L1, color = 'black', linestyle = '--', linewidth = '1')
 plt.axhline(y = L11, color = 'black', linestyle = '--', linewidth = '1') # 5 по счету линия
-plt.axvline(x = 3.5, color = 'r', linestyle = '--', linewidth = '1')# вертикальная линия
+plt.axvline(x = 2.5, color = 'r', linestyle = '--', linewidth = '1')# вертикальная линия
 plt.axvline(x = 5.5, color = 'r', linestyle = '--', linewidth = '1')
 plt.axvline(x = 11.5, color = 'r', linestyle = '--', linewidth = '1')
 plt.axvline(x = 14.5, color = 'r', linestyle = '--', linewidth = '1')
