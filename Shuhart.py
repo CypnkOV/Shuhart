@@ -573,7 +573,7 @@ plt.axhline(y = L11, color = 'black', linestyle = '--', linewidth = '1') # 5 п�
 plt.axvline(x = 3.5, color = 'r', linestyle = '--', linewidth = '1')# вертикальная линия
 plt.axvline(x = 5.5, color = 'r', linestyle = '--', linewidth = '1')
 plt.axvline(x = 11.5, color = 'r', linestyle = '--', linewidth = '1')
-plt.axvline(x = 13.5, color = 'r', linestyle = '--', linewidth = '1')
+plt.axvline(x = 14.5, color = 'r', linestyle = '--', linewidth = '1')
 plt.axvline(x = 24, color = 'r', linestyle = '--', linewidth = '1')
 
 # отображение графика индивид.
