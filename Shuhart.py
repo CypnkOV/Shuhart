@@ -1,13 +1,15 @@
 import matplotlib.pyplot as plt
-import numpy as np
-import random as rand
+from numpy import nanmean
+from random import randint
 import pandas as pd
 import sys
 import os
 from tkinter import Tk, Label, Button
 from tabulate import tabulate
+from math import ceil
+from math import floor
 
-mesh1 = [rand.randint(0, 50), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100), rand.randint(0, 100)]
+mesh1 = [randint(0, 50), randint(0, 100), randint(0, 1), randint(0, 100), randint(0, 100), randint(0, 100), randint(0, 100), randint(0, 100), randint(0, 100)]
 pepe1 = pd.DataFrame({'x': mesh1})
 razmah = []
 
@@ -23,30 +25,11 @@ def razschet():
 razschet()
 pepe2 = pd.DataFrame({'x': razmah})
 
-x = 0
-n1 = n2 = n3 = n4 = n5 = n6 = n7 = n8 = n9 = -98989
-m = 0
-a1 = 0
-a2 = 0
-X = 0
-R = 0
-UCL1 = 0
-LCL1 = 0
-UCL2 = 0
-u1 = 0
-u11 = 0
-U1 = 0
-U11 = 0
-l1 = 0
-l11 = 0
-L1 = 0
-L11 = 0
+x = n1 = n2 = m = a1 = X = R = UCL1 = LCL1 = UCL2 = u1 = u11 = U1 = U11 = l1 = l11 = L1 = L11 = 0
 
-# 1 критерий
-
-while len(mesh1) != 9:
-    X = np.nanmean(pepe1.x)  # средняя для Индивид. (nanmean её вычисляет)
-    R = np.nanmean(pepe2.x)  # средняя для Размахов
+while len(mesh1) != 24 and n2 < 10:
+    X = nanmean(pepe1.x)  # средняя для Индивид. (nanmean её вычисляет)
+    R = nanmean(pepe2.x)  # средняя для Размахов
     UCL1 = X + 2.660 * R
     LCL1 = X - 2.660 * R
     UCL2 = 3.267 * R
@@ -58,84 +41,47 @@ while len(mesh1) != 9:
     l11 = 2 / 3 * (X - LCL1)
     L1 = X - l11
     L11 = X - l1
-    m += 1
-    if m > UCL1:
-        mesh1.insert(2, m)
+    if m < UCL1: #1 критерий
+        m = randint(int(UCL1), int(UCL1) + 10)
+        mesh1[2] = m
         razmah.clear()
         razschet()
         pepe1 = pd.DataFrame({'x': mesh1})
         pepe2 = pd.DataFrame({'x': razmah})
-
-# 2 критерий
-
-while len(mesh1) != 15:
-    X = np.nanmean(pepe1.x)
-    R = np.nanmean(pepe2.x)
-    UCL1 = X + 2.660 * R
-    LCL1 = X - 2.660 * R
-    UCL2 = 3.267 * R
-    u1 = 1 / 3 * (UCL1 - X)
-    u11 = 2 / 3 * (UCL1 - X)
-    U1 = UCL1 - u11
-    U11 = UCL1 - u1
-    l1 = 1 / 3 * (X - LCL1)
-    l11 = 2 / 3 * (X - LCL1)
-    L1 = X - l11
-    L11 = X - l1
-    a1 += rand.randint(4, 10)
-    if a1 > L1:
+    if a1 > L1 and len(mesh1) != 15: #2 критерий
+        a1 += randint(4, 10)
         mesh1.insert(6, a1)
         razmah.clear()
         razschet()
         pepe1 = pd.DataFrame({'x': mesh1})
         pepe2 = pd.DataFrame({'x': razmah})
-
-# 3 критерий
-
-while len(mesh1) != 24:
-    while x != 9:
-        x += 1
-        if len(mesh1) != 24:
-            mesh1.append(0)
-            mesh1.append(0)
-            mesh1.append(0)
-            mesh1.append(0)
-            mesh1.append(0)
-            mesh1.append(0)
-            mesh1.append(0)
-            mesh1.append(0)
-            mesh1.append(0)
-        for i in mesh1[15:24]:
-            X = np.nanmean(pepe1.x)
-            R = np.nanmean(pepe2.x)
-            UCL1 = X + 2.660 * R
-            LCL1 = X - 2.660 * R
-            UCL2 = 3.267 * R
-            u1 = 1 / 3 * (UCL1 - X)
-            u11 = 2 / 3 * (UCL1 - X)
-            U1 = UCL1 - u11
-            U11 = UCL1 - u1
-            l1 = 1 / 3 * (X - LCL1)
-            l11 = 2 / 3 * (X - LCL1)
-            L1 = X - l11
-            L11 = X - l1
-            if i < L11:
-                n1 = rand.randint(int(L11), int(X))
-                mesh1.pop(23)
-                mesh1.insert(15, n1)
-                razmah.clear()
-                razschet()
-                pepe1 = pd.DataFrame({'x': mesh1})
-                pepe2 = pd.DataFrame({'x': razmah})
-            if i > X:
-                n1 = rand.randint(int(L11), int(X))
-                mesh1.pop(23)
-                mesh1.insert(15, n1)
-                razmah.clear()
-                razschet()
-                pepe1 = pd.DataFrame({'x': mesh1})
-                pepe2 = pd.DataFrame({'x': razmah})
-
+    if len(mesh1) == 15: #3 критерий
+        mesh1.append(0)
+        mesh1.append(0)
+        mesh1.append(0)
+        mesh1.append(0)
+        mesh1.append(0)
+        mesh1.append(0)
+        mesh1.append(0)
+        mesh1.append(0)
+        mesh1.append(0)
+    for i in mesh1[15:24]:
+        if i < L11:
+            n1 = randint(ceil(L11), floor(X))
+            mesh1.pop(23)
+            mesh1.insert(15, n1)
+            razmah.clear()
+            razschet()
+            pepe1 = pd.DataFrame({'x': mesh1})
+            pepe2 = pd.DataFrame({'x': razmah})
+        if i > X:
+            n1 = randint(ceil(L11), floor(X))
+            mesh1.pop(23)
+            mesh1.insert(15, n1)
+            razmah.clear()
+            razschet()
+            pepe1 = pd.DataFrame({'x': mesh1})
+            pepe2 = pd.DataFrame({'x': razmah})
 
 pepe1 = pd.DataFrame({'x': mesh1}) # таблица индивидуальных значений
 pepe2 = pd.DataFrame({'x': razmah}) # таблица размахов
@@ -220,6 +166,7 @@ plt.axhline(y = UCL2, color = 'red', linestyle = '--', label = 'верхняя',
 plt.plot(pepe2.x, marker = 'o')
 plt.show()
 
+# перезапуск
 def restart_program():
     python = sys.executable
     os.execl(python, python, * sys.argv)
