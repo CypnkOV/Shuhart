@@ -25,7 +25,7 @@ def razschet():
 razschet()
 pepe2 = pd.DataFrame({'x': razmah})
 
-x = n1 = n2 = m = a1 = X = R = UCL1 = LCL1 = UCL2 = u1 = u11 = U1 = U11 = l1 = l11 = L1 = L11 = 0
+x = n1 = n2 = m = a1 = X = R = UCL1 = LCL1 = UCL2 = u1 = u11 = U1 = U11 = l1 = l11 = L1 = L11 = LCL2 = 0
 
 while len(mesh1) != 24 and n2 < 10:
     X = nanmean(pepe1.x)  # средняя для Индивид. (nanmean её вычисляет)
@@ -107,13 +107,15 @@ df = pd.DataFrame({'Индивид. знач' : mesh1,
                    '\u0058\u0305': X_sredn,
                    '\u0052\u0305': R_sredn,
                    'UCL': UCL1_poz,
-                   'LCL': LCL1_poz})
+                   'LCL': LCL1_poz,
+                   '№': list(range(1,25))})
 
+df = df.set_index('№')
 df['Размахи'] = df['Размахи'].shift(1)
 
 print(tabulate(df, headers='keys', tablefmt='psql'))
 
-# скрыть ограничения графика, подпись зон
+# скрыть ограничения графика, подпись зон, подписать график
 
 ax = plt.gca()
 
@@ -121,7 +123,9 @@ ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.spines['bottom'].set_visible(False)
 ax.spines['bottom'].set_position('center')
-ax.set_title("Критерии выявления особых причин")
+ax.set_title("Критерии выявления особых причин на карте индивидуальных значений")
+ax.text(10, LCL1 - 20, '№ измерения', color='black', fontsize=10) # подпись X
+ax.set_ylabel('Индивид. значения') # подпись Y
 y_values = [UCL1, X, LCL1]
 labels = ["UCL", '\u0058\u0305', "LCL"]
 ax.text(-1, (X + L11) / 2, 'C', horizontalalignment='left', color='black', fontsize=20)
@@ -133,7 +137,7 @@ ax.text(-1, (L1 + LCL1) / 2, 'A', horizontalalignment='left', color='black', fon
 plt.yticks(y_values, labels)
 plt.xticks([])
 
-# средняя линия, границы
+# средняя линия, границы индивид. значений
 
 plt.axhline(y = X, color = 'black', linestyle = '-.', label = 'среднее', linewidth = '1') # axhline добавляет гориз линию
 plt.axhline(y = UCL1, color = 'black', linestyle = '--', label = 'верхняя', linewidth = '1')
@@ -142,7 +146,7 @@ plt.axhline(y = U1, color = 'black', linestyle = '--', linewidth = '1')
 plt.axhline(y = U11, color = 'black', linestyle = '--', linewidth = '1') # 2 по счету линия
 plt.axhline(y = L1, color = 'black', linestyle = '--', linewidth = '1')
 plt.axhline(y = L11, color = 'black', linestyle = '--', linewidth = '1') # 5 по счету линия
-plt.axvline(x = 2.5, color = 'r', linestyle = '--', linewidth = '1')# вертикальная линия
+plt.axvline(x = 2.5, color = 'r', linestyle = '--', linewidth = '1') # вертикальная линия
 plt.axvline(x = 5.5, color = 'r', linestyle = '--', linewidth = '1')
 plt.axvline(x = 11.5, color = 'r', linestyle = '--', linewidth = '1')
 plt.axvline(x = 14.5, color = 'r', linestyle = '--', linewidth = '1')
@@ -160,8 +164,12 @@ fig, ax = plt.subplots()
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 
-plt.axhline(y = R, color = 'red', linestyle = '--', label = 'среднее', linewidth = '1')
-plt.axhline(y = UCL2, color = 'red', linestyle = '--', label = 'верхняя', linewidth = '1')
+ax.set_title("Критерии выявления особых причин на карте размахов")
+ax.set_xlabel('№ измерения') # подпись X
+ax.set_ylabel('Размахи') # подпись Y
+y_values = [UCL2, X, LCL2]
+plt.axhline(y = R, color = 'black', linestyle = '--', label = 'среднее', linewidth = '1')
+plt.axhline(y = UCL2, color = 'black', linestyle = '--', label = 'верхняя', linewidth = '1')
 
 plt.plot(pepe2.x, marker = 'o')
 plt.show()
