@@ -121,10 +121,8 @@ ax = plt.gca()
 
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
-ax.spines['bottom'].set_visible(False)
-ax.spines['bottom'].set_position('center')
 ax.set_title("Критерии выявления особых причин на карте индивидуальных значений")
-ax.text(10, LCL1 - 20, '№ измерения', color='black', fontsize=10) # подпись X
+ax.set_xlabel('№ измерения') # подпись X
 ax.set_ylabel('Индивид. значения') # подпись Y
 y_values = [UCL1, X, LCL1]
 labels = ["UCL", '\u0058\u0305', "LCL"]
@@ -134,8 +132,9 @@ ax.text(-1, (U1 + U11) / 2, 'B', horizontalalignment='left', color='black', font
 ax.text(-1, (L1 + L11) / 2, 'B', horizontalalignment='left', color='black', fontsize=20)
 ax.text(-1, (U11 + UCL1) / 2, 'A', horizontalalignment='left', color='black', fontsize=20)
 ax.text(-1, (L1 + LCL1) / 2, 'A', horizontalalignment='left', color='black', fontsize=20)
+plt.yticks()
 plt.yticks(y_values, labels)
-plt.xticks([])
+plt.xticks(list(range(0, 24)), list(range(1, 25)))
 
 # средняя линия, границы индивид. значений
 
@@ -146,7 +145,8 @@ plt.axhline(y = U1, color = 'black', linestyle = '--', linewidth = '1')
 plt.axhline(y = U11, color = 'black', linestyle = '--', linewidth = '1') # 2 по счету линия
 plt.axhline(y = L1, color = 'black', linestyle = '--', linewidth = '1')
 plt.axhline(y = L11, color = 'black', linestyle = '--', linewidth = '1') # 5 по счету линия
-plt.axvline(x = 2.5, color = 'r', linestyle = '--', linewidth = '1') # вертикальная линия
+plt.axvline(x = 1.5, color = 'r', linestyle = '--', linewidth = '1') # вертикальные линии
+plt.axvline(x = 2.5, color = 'r', linestyle = '--', linewidth = '1')
 plt.axvline(x = 5.5, color = 'r', linestyle = '--', linewidth = '1')
 plt.axvline(x = 11.5, color = 'r', linestyle = '--', linewidth = '1')
 plt.axvline(x = 14.5, color = 'r', linestyle = '--', linewidth = '1')
