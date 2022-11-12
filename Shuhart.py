@@ -115,6 +115,12 @@ df['Размахи'] = df['Размахи'].shift(1)
 
 print(tabulate(df, headers='keys', tablefmt='psql'))
 
+df = df.T # развернуть таблицу
+
+print(tabulate(df, headers='keys', tablefmt='psql'))
+
+df.to_excel("output.xlsx") # Excel
+
 # скрыть ограничения графика, подпись зон, подписать график
 
 ax = plt.gca()
